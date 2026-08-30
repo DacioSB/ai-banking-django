@@ -52,13 +52,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'banking_workflow.apps.MongoAdminConfig',
+    'banking_workflow.apps.MongoAuthConfig',
+    'banking_workflow.apps.MongoContentTypesConfig',
+
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'banking'
+
+    'banking',
 ]
 
 MIDDLEWARE = [
@@ -96,10 +98,13 @@ WSGI_APPLICATION = 'banking_workflow.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.environ["DB_ENGINE"],
+        'HOST': mongodb_uri(),
+        'NAME': env_value("DB_NAME"),
     }
 }
+
+DATABASE_ROUTERS = ["django_mongodb_backend.routers.MongoRouter"]
 
 
 # Password validation
@@ -141,7 +146,13 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django_mongodb_backend.fields.ObjectIdAutoField'
+
+MIGRATION_MODULES = {
+    'admin': 'mongo_migrations.admin',
+    'auth': 'mongo_migrations.auth',
+    'contenttypes': 'mongo_migrations.contenttypes',
+}
 
 VOYAGE_API_KEY = env_value("VOYAGE_API_KEY")
 OPENROUTER_API_KEY = env_value("OPENROUTER_API_KEY")
