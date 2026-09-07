@@ -1,3 +1,40 @@
 from django.db import models
 
 # Create your models here.
+class BankingDocument(models.Model):
+    DOCUMENT_TYPES = [
+        ('loan_application', 'Loan Application'),
+        ('kyc', 'KYC Document'),
+        ('compliance', 'Compliance Report'),
+        ('account_statement', 'Account Statement'),
+        ('risk_assessment', 'Risk Assessment'),
+    ]
+
+    STATUS_CHOICES = [
+        ('pending', 'Pending Review'),
+        ('processing', 'Processing'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+        ('completed', 'Completed'),
+    ]
+    #title-> charfield (varchar 255), content (text field)
+    #status, document type
+    #customer name and id
+    #embedding json field com null true e blank true
+    #metadata tambem jsonfield default dict
+    #created at e updated at com auto_add e autonow true
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    document_type = models.CharField(max_length=50, choices=DOCUMENT_TYPES)
+    customer_name = models.CharField(max_length=255)
+    customer_id = models.CharField(max_length=100)
+    embedding = models.JSONField(null=True, blank=True)
+    metadata = models.JSONField(default=dict, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+    def __str__(self):
+        return f"{self.get_document_type_display()}: {self.title}"
