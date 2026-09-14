@@ -38,3 +38,29 @@ class BankingDocument(models.Model):
         ordering = ["-created_at"]
     def __str__(self):
         return f"{self.get_document_type_display()}: {self.title}"
+
+class WorkflowTask(models.Model):
+    TASK_TYPES = [
+        ('document_review', 'Document Review'),
+        ('compliance_check', 'Compliance Check'),
+        ('approval_request', 'Approval Request'),
+        ('risk_assessment', 'Risk Assessment'),
+    ]
+
+    document = models.ForeignKey(
+        BankingDocument,
+        on_delete=models.CASCADE,
+        related_name="tasks"
+    )
+    task_type = models.CharField(max_length=50, choices=TASK_TYPES)
+    description = models.TextField()
+    assigned_to = models.CharField(max_length=255, blank=True)
+    is_completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.get_task_type_display()} for {self.document.title}"
