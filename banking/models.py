@@ -17,12 +17,7 @@ class BankingDocument(models.Model):
         ('rejected', 'Rejected'),
         ('completed', 'Completed'),
     ]
-    #title-> charfield (varchar 255), content (text field)
-    #status, document type
-    #customer name and id
-    #embedding json field com null true e blank true
-    #metadata tambem jsonfield default dict
-    #created at e updated at com auto_add e autonow true
+
     title = models.CharField(max_length=255)
     content = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
