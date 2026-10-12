@@ -3,7 +3,7 @@ from django.contrib.admin import forms
 from banking.models import BankingDocument
 
 
-class Form(forms.ModelForm):
+class DocumentUploadForm(forms.ModelForm):
     
     class Meta:
         model = BankingDocument()
