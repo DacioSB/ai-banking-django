@@ -23,7 +23,7 @@ def document_list(request: HttpRequest):
         "current_type": type,
         "current_status": status
     }
-    return render(request=request, template="banking/document_list.html", context=context)
+    return render(request, 'banking/document_list.html', context)
 
 #document_form_upload
 def document_form_upload(request: HttpRequest):

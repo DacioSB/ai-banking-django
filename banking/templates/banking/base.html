@@ -20,6 +20,35 @@
             color: var(--ink); 
             min-height: 100vh; 
         }
+        nav {
+            background: var(--mdb-deep);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            height: 56px;
+            border-bottom: 3px solid var(--mdb-leaf);
+        }
+        nav a {
+            text-decoration: none;
+            color: #d9eee7;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            transition: background .15s, color .15s;
+        }
+        nav a:hover, nav a.active {
+            background: rgba(0, 237, 100, .13);
+            color: #fff;
+        }
+        nav span {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-right: auto;
+            letter-spacing: .3px;
+        }
     </style>
     <body>
         <nav>
